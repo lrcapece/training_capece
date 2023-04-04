@@ -1,0 +1,69 @@
+---
+title: "cleaning and wrangling data"
+author: "Lena R Capece"
+date: "2023-04-04"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+# Cleaning and wrangling data practice
+
+## Load packages
+```{r load, warning = FALSE, message = FALSE}
+
+library(dplyr)
+library(tidyr)
+library(readr)
+
+## Attaching package: ‘dplyr’
+
+# The following objects are masked from ‘package:stats’:
+# 
+#     filter, lag
+# 
+# The following objects are masked from ‘package:base’:
+# 
+#     intersect, setdiff, setequal, union
+
+# use '::' to resolve masked shown above packages by making sure R is using the function from the specific package that you want e.g., dply::filter()
+
+
+```
+
+## Introduction
+About the data:
+This data was downloaded from [here](https://knb.ecoinformatics.org/view/df35b.304.2) on April 4, 2023. 
+
+## Read data
+
+```{r read, warning = FALSE, message = FALSE}
+catch_original <- read_csv("https://knb.ecoinformatics.org/knb/d1/mn/v2/object/df35b.302.1")
+```
+
+## Explore data
+
+```{r explore, eval= FALSE, echo = FALSE}
+colnames(catch_original)
+
+head(catch_original)
+
+summary(catch_original)
+
+sort(unique(catch_original$Year))
+
+# want to know what regions are the data
+(unique(catch_original$Region))
+
+```
+
+## Clean and reshape data
+
+### Remove columns
+
+### Check column types
+
+### Reshape data
+
+
