@@ -1,0 +1,73 @@
+---
+title: 'R Practice: Tidy Data and Joins'
+author: "Lena R Capece"
+date: "2023-04-04"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Loading packages 
+
+```{r load packages, warning=FALSE, message=FALSE}
+
+library(readr)
+library(dplyr)
+library(lubridate)
+
+```
+
+## Download data
+
+```{r download data, warning=FALSE, message=FALSE }
+
+bird_observations <- read_csv("https://portal.edirepository.org/nis/dataviewer?packageid=knb-lter-cap.256.10&entityid=53edaa7a0e083013d9bf20322db1780e")
+surveys  <- read_csv("https://portal.edirepository.org/nis/dataviewer?packageid=knb-lter-cap.256.10&entityid=b2466fa5cb5ed7ee1ea91398fc291c59")
+sites <- read_csv("https://portal.edirepository.org/nis/dataviewer?packageid=knb-lter-cap.256.10&entityid=81bf72420e69077097fb0790dcdc63a6")
+taxalist <- read_csv("https://portal.edirepository.org/nis/dataviewer?packageid=knb-lter-cap.256.10&entityid=58f863b7e3066e68536a9cacdc7bd58e")
+
+```
+
+## 2a. Explore data 
+
+```{r warning=FALSE, message=FALSE, eval=FALSE, echo=FALSE}
+
+colnames(bird_observations)
+
+head(bird_observations)
+
+summary(bird_observations)
+
+```
+## 2b. What are the primary and foreign keys for the tables bird_observations and taxalist?
+*bird_observations*
+foreign keys: species ID
+primary keys
+
+*taxalist*
+foreign keys: species ID
+primary keys
+
+## Subset birds
+
+```{r warning=FALSE, message=FALSE}
+birds_subset <- bird_observations %>% 
+      filter(species_id %in% c("BHCO", "RWBL")) %>% 
+      filter(site_id %in% c("LI-W", "NU-C"))
+
+```
+
+## Join tables using left_join()
+
+Joining birds_subset with sites will create wide dataset which will add columns from sites to birds_subset that correspond to the appropriate site ID. 
+
+
+```{r warning=FALSE, message=FALSE}
+
+birds_left <- birds_subset %>% 
+  left_join(y = sites, by = "site_id")
+
+```
+
