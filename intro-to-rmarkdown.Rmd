@@ -1,0 +1,68 @@
+---
+title: "introduction to rmarkdown"
+author: "Lena R Capece"
+date: "2023-04-03"
+output: 
+  html_document: 
+    toc: true
+    toc_float: true
+bibliography: references.bib
+reference-section-title: References
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# This is a header
+
+## This is another header
+
+-This is **bold** -This is *italic* I am writing plain text
+
+[This is a link.](https://learning.nceas.ucsb.edu/2023-04-coreR/session_04.html#rmarkdown-syntax)
+
+> block quote
+
+##Link citations
+
+This is an important fact[@oke2020]
+
+## Adding tables
+
+| Col1 | Col2 | Col3 |
+|------|------|------|
+| 1    |      |      |
+| 2    |      |      |
+| 3    |      |      |
+
+: Example table
+
+## Example Chunk
+```{r example code chunk}
+#command + option + i
+
+height_ft <- c(5.2, 6.0, 5.7)
+
+important_coef <- 3.14
+  
+```
+
+## Practice Chunk
+```{r new chunk}
+shoe_size <-c(7.5, 9, 8)
+
+mean_shoe_size<-mean(shoe_size)
+
+```
+
+## Ethical research practices
+
+The research carried out at RBNERR is under state and federal protection. It is a research reserve. 
+
+
+## References
+<div id="refs"></div>
+
+## Appendices
+
