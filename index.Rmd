@@ -21,3 +21,4 @@ knitr::opts_chunk$set(echo = TRUE)
 - [Joins](r-practice-tidy-data-joins.html)
 - Visualizing Data
 - Wrangling and Maps
+
