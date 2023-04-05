@@ -10,3 +10,13 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 
+## Lesssons
+- Intro to Rmd
+- Cleaning and Wrangling Data
+- Data Vis
+- Spatial Data
+
+## Practice Session
+- Joins
+- Visualizing Data
+- Wrangling and Maps
