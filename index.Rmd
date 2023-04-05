@@ -1,5 +1,5 @@
 ---
-title: "Core R Workshop"
+title: "CoreR Workshop"
 author: "Lena R Capece"
 date: "2023-04-05"
 output: html_document
