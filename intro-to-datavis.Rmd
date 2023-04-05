@@ -1,0 +1,158 @@
+---
+title: "Intro to Data Visualization"
+author: "Lena R Capece"
+date: "2023-04-05"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Load packages
+
+```{r load packages, message=FALSE, warning=FALSE}
+
+library(readr)
+library(dplyr)
+library(tidyr)
+library(forcats)
+library(ggplot2)
+library(leaflet)
+library(DT)
+library(scales)
+
+```
+
+## Load data
+
+```{r load data, message=FALSE, warning=FALSE}
+
+escapement <- read_csv("https://knb.ecoinformatics.org/knb/d1/mn/v2/object/urn%3Auuid%3Af119a05b-bbe7-4aea-93c6-85434dcb1c5e")
+
+```
+
+## Explore data
+
+```{r explore data, message=FALSE, warning=FALSE, echo=FALSE}
+
+colnames(escapement)
+
+## Peak at each column and class
+glimpse(escapement)
+
+## From when to when was data collected
+range(escapement$sampleDate)
+
+## How frequently was data collected
+head(escapement$sampleDate) # begining of data
+tail(escapement$sampleDate) # end of data
+
+## Which species were collected?
+unique(escapement$Species)
+
+```
+## Cleaning and wrangling data for data visualizing
+### Calculate an annual escapement by SASAP.Region, Species and Species type
+
+```{r cleaning, message=FALSE, warning=FALSE, echo=FALSE}
+
+annual_esc <- escapement %>% 
+  separate(sampleDate, c("Year", "Month", "Day"), sep = "-") %>% #isolate temporal collection data by year, month, and day -- they are characters
+  mutate(Year = as.numeric(Year)) %>% # make all "Year" a numeric because it is a character
+  group_by(Species, SASAP.Region, Year) %>% # we want to group data by species SASAP. Region and Year
+  summarize(escape = sum(DailyCount)) %>% # apply a single calculation to DailyCount to the entire dataset so we get escape counts for the entire year
+  filter(Species %in% c("Chinook", "Sockeye","Chum","Coho","Pink")) # only get results for the intended species which are as rows
+
+unique(annual_esc$Species)
+head(annual_esc)
+
+
+```
+
+## Plotting basics with `ggplot`
+
+```{r plotting essentials, message=FALSE, warning=FALSE,}
+## Option 1
+ggplot(data = annual_esc,
+       aes(x = Species,
+           y = escape)) +
+  geom_col()
+  
+## Option 2
+ggplot(data = annual_esc) + 
+  geom_col(aes(x=Species, y=escape))
+
+## Option 3
+ggplot() +
+  geom_col(data= annual_esc,
+           aes(x=Species, y=escape))
+
+```
+
+## Different geoms
+
+*Boxplot*
+```{r}
+
+annual_esc %>% 
+  filter(Year == 1974, Species %in% c("Chum", "Pink")) %>% 
+  ggplot(aes(x=Species, y=escape)) +
+  geom_boxplot()
+  
+
+```
+*Line and point*
+
+```{r}
+
+annual_esc %>% 
+  filter(Species == "Sockeye") %>% 
+  filter(SASAP.Region == "Bristol Bay") %>% 
+  ggplot(aes(x=Year, y=escape)) +
+  geom_line() +
+  geom_point()
+
+```
+
+## Customization of plots 
+
+*Basic plot*
+```{r}
+# basic plot 
+ggplot(data=annual_esc, aes(x=Species, y=escape)) +
+  geom_col()
+  
+
+```
+
+*Make a column blue*
+```{r}
+# now make a column blue 
+ggplot(data=annual_esc, aes(x=Species, y=escape, fill="blue")) +
+  geom_col()
+
+```
+This didnt work--why? ggplot thinks fill is a variable. Instead we should add the color to the geom_col(). 
+
+*Correct version of making column blue*
+```{r}
+
+ggplot(data=annual_esc, aes(x=Species, y=escape)) +
+  geom_col(fill="blue")
+
+## Yay!
+
+```
+
+*Color the columns by a different variable that is provided in the dataset such as SASAP.Region*
+
+```{r}
+## Put the condition and variablee inside the aes() function 
+
+ggplot(data=annual_esc, aes(x=Species, y=escape, fill=SASAP.Region)) +
+  geom_col()
+
+```
+
+
