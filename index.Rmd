@@ -11,12 +11,13 @@ knitr::opts_chunk$set(echo = TRUE)
 
 
 ## Lesssons
-- Intro to Rmd
-- Cleaning and Wrangling Data
+- [Intro to Rmd](intro-to-rmarkdown.html) 
+
+- [Cleaning and Wrangling Data](data-cleaning.html)
 - Data Vis
 - Spatial Data
 
 ## Practice Session
-- Joins
+- [Joins](r-practice-tidy-data-joins.html)
 - Visualizing Data
 - Wrangling and Maps
